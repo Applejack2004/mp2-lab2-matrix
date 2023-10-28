@@ -24,9 +24,14 @@ protected:
 	int Size;       // размер вектора
 	int StartIndex; // индекс первого элемента вектора
 public:
+	
 	TVector(int s = 10, int si = 0);
 	TVector(const TVector& v);                // конструктор копирования
 	~TVector();
+	T* Get_pVector()
+	{
+		return pVector;
+	}
 	int GetSize() { return Size; } // размер вектора
 	int GetStartIndex() { return StartIndex; } // индекс первого элемента
 	T& operator[](int pos);             // доступ
