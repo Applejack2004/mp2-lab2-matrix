@@ -47,7 +47,18 @@ TEST(TVector, copied_vector_is_equal_to_source_one)
 
 	TVector<int> v2(v1);
 	EXPECT_NE(v1.Get_pVector(), v2.Get_pVector());
-
+	/* 
+	TVector<int>* v1= new TVector<int>[3];
+	v1[0] = 1;
+	v1[1] = 3;
+	v1[2] = 30;
+	TVector<int> v2(*v1);
+	delete [] v1;
+	EXPECT_EQ(3,v2.GetSize());
+	EXPECT_EQ(1,v2.pVector[0]);
+	EXPECT_EQ(3,v2.pVector[1]);
+	EXPECT_EQ(30,v2.pVector[2]);
+	*/
 
 }
 
