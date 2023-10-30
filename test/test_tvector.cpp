@@ -55,9 +55,9 @@ TEST(TVector, copied_vector_is_equal_to_source_one)
 	TVector<int> v2(*v1);
 	delete [] v1;
 	EXPECT_EQ(3,v2.GetSize());
-	EXPECT_EQ(1,v2.pVector[0]);
-	EXPECT_EQ(3,v2.pVector[1]);
-	EXPECT_EQ(30,v2.pVector[2]);
+	EXPECT_EQ(1,v2[0]);
+	EXPECT_EQ(3,v2[1]);
+	EXPECT_EQ(30,v2[2]);
 	*/
 
 }
@@ -92,7 +92,8 @@ TEST(TVector, throws_when_set_element_with_negative_index)
 
 TEST(TVector, throws_when_set_element_with_too_large_index)
 {
-	TVector<int> v(10);
+	TVector<int> v(10,1);
+	//v[100000] = 1;
 	ASSERT_ANY_THROW(v[100000] = 1);
 }
 
