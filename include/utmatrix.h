@@ -68,8 +68,9 @@ template <class T>
 TVector<T>::TVector(int s, int si)
 {
 
-	if (s < 0 || s > MAX_VECTOR_SIZE)
+	if (s < 0 || s > MAX_VECTOR_SIZE|| si<0)
 	throw s;
+
 	Size = s;
 	StartIndex = si;
 	pVector = new T[Size];
@@ -87,7 +88,10 @@ TVector<T>::TVector(const TVector<T>& v)
 	Size = v.Size;
 	StartIndex = v.StartIndex;
 	pVector = new T[Size];
-	std::copy(v.pVector, v.pVector + (Size), pVector);
+	for (int i = 0; i < Size; i++)
+	{
+		pVector[i] = v.pVector[i];
+	}
 }
 
 template <class T>
@@ -100,8 +104,10 @@ template <class T> // доступ
 T& TVector<T>::operator[](int pos)
 {
 
-	if ((pos - StartIndex) < 0 || (pos - StartIndex) > MAX_VECTOR_SIZE || (pos-StartIndex)>Size)
-	throw "bad index";
+	if (pos - StartIndex < 0 || pos - StartIndex >= Size)
+	{
+		throw exception("bad index");
+	}
 	return pVector[pos - StartIndex];
 }
 
@@ -191,7 +197,7 @@ TVector<T> TVector<T>::operator+(const TVector<T>& v)
 {
 	if (Size != v.Size)
 	{
-		throw "not equal size";
+		throw exception("not equal size");
 	}
 	TVector<T> Res(Size);
 	for (int i = 0; i < Size; i++)
@@ -206,7 +212,7 @@ TVector<T> TVector<T>::operator-(const TVector<T>& v)
 {
 	if (Size != v.Size)
 	{
-		throw "not equal size";
+		throw exception("not equal size");
 	}
 	TVector<T> res(Size);
 	for (int i = 0; i < Size; i++)
@@ -221,12 +227,12 @@ T TVector<T>::operator*(const TVector<T>& v)
 {
 	if (Size != v.Size)
 	{
-		throw "not equal size";
+		throw exception("not equal size");
 	}
-	T res;
+	T res = 0;
 	for (int i = 0; i < Size; i++)
 	{
-		res = v.pVector[i] * this->pVector[i];
+		res += v.pVector[i] * pVector[i];
 	}
 	return res;
 }
@@ -262,8 +268,12 @@ public:
 };
 
 template <class T>
-TMatrix<T>::TMatrix(int s=10) : TVector<TVector<T> >(s)
+TMatrix<T>::TMatrix(int s) : TVector<TVector<T> >(s)
 {
+	if (s > MAX_MATRIX_SIZE)
+	{
+		throw exception("wrong size");
+	}
 	Size = s;
 	for (int i = 0; i < Size; i++)
 	{
@@ -303,7 +313,7 @@ bool TMatrix<T>::operator==(const TMatrix<T>& m) const
 template <class T> // сравнение
 bool TMatrix<T>::operator!=(const TMatrix<T>& mt) const
 {
-	return!(mt==*this)
+	return!(mt == *this);
 } 
 
 template <class T> // присваивание
@@ -319,7 +329,10 @@ TMatrix<T>& TMatrix<T>::operator=(const TMatrix<T>& m)
 		Size = m.Size;
 		pVector = new TVector<T>[Size];
 	}
-	std::copy(m.pVector, m.pVector + Size, pVector);
+	for (int i = 0; i < Size; i++)
+	{
+		pVector[i] = m.pVector[i];
+	}
 	return *this;
 } 
 

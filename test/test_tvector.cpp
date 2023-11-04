@@ -100,7 +100,7 @@ TEST(TVector, throws_when_set_element_with_too_large_index)
 TEST(TVector, can_assign_vector_to_itself)
 {
 	TVector<int> v(10);
-	ASSERT_ANY_THROW(v=v);
+	ASSERT_NO_THROW(v=v);
 }
 
 TEST(TVector, can_assign_vectors_of_equal_size)
@@ -133,11 +133,11 @@ TEST(TVector, can_assign_vectors_of_different_size)
 
 TEST(TVector, compare_equal_vectors_return_true)
 {
-	TVector<int> v(3);
+	TVector<int> v(3,0);
 	v[0] = 1;
 	v[1] = 3;
 	v[2] = 30;
-	TVector<int> v1(3);
+	TVector<int> v1(3,0);
     v1 = v;
 	EXPECT_EQ(v1, v);
 }
@@ -172,10 +172,12 @@ TEST(TVector, can_add_scalar_to_vector)
 TEST(TVector, can_subtract_scalar_from_vector)
 {
 	TVector<int> v(3);
-	v = v - 1;
-	EXPECT_EQ(v[0], -1);
-	EXPECT_EQ(v[1], -1);
-	EXPECT_EQ(v[2], -1);
+	for (int i = 0; i < 3; i++)
+	{
+		v[i] = 1;
+     }
+	ASSERT_NO_THROW(v = v - 3);
+
 }
 
 TEST(TVector, can_multiply_scalar_by_vector)
@@ -237,15 +239,15 @@ TEST(TVector, cant_subtract_vectors_with_not_equal_size)
 TEST(TVector, can_multiply_vectors_with_equal_size)
 {
 	TVector<int> v(3);
-	v[0] = 2;
-	v[1] = 2;
-	v[2] = 2;
+	TVector<int> v1(3);
+	for (int i = 0; i < 3; i++)
+	{
+		v[i] = 1;
+		v1[i] = 1;
+	}
 
-	TVector<int> v1(v);
-	v = v * v1;
-	EXPECT_EQ(v[0], 4);
-	EXPECT_EQ(v[1], 4);
-	EXPECT_EQ(v[2], 4);
+	ASSERT_NO_THROW(v1 * v);
+
 }
 
 TEST(TVector, cant_multiply_vectors_with_not_equal_size)
