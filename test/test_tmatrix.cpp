@@ -34,21 +34,23 @@ TEST(TMatrix, copied_matrix_is_equal_to_source_one)
 
 TEST(TMatrix, copied_matrix_has_its_own_memory)
 {
-	TMatrix<int>* m1 = new TMatrix<int>/*(2)*/;
+	TMatrix<int>* m1 = new TMatrix<int>(2);
 
 	TMatrix<int> m2;
-	(*m1)[0][0] = 1;
-	(*m1)[0][1] = 1;
-	(*m1)[1][0] = 1;
-	(*m1)[1][1] = 1;
+	for (int i = 0; i < 2; i++)
+		for (int j = i; j < 2; j++)
+		{
+			(*m1)[i][j] = 1;
+		}
 	m2 = *m1;
 	delete m1;
 
 
 	EXPECT_EQ(1, m2[0][0]);
 	EXPECT_EQ(1, m2[0][1]);
-	EXPECT_EQ(1, m2[1][0]);
 	EXPECT_EQ(1, m2[1][1]);
+
+	
 }
 
 TEST(TMatrix, can_get_size)
@@ -109,10 +111,11 @@ TEST(TMatrix, compare_equal_matrices_return_true)
 {
 	TMatrix<int> m(2);
 	//TMatrix<int> m2(2);
-	m[0][0] = 1;
-	m[0][1] = 1;
-	m[1][0] = 1;
-	m[1][1] = 1;
+	for (int i = 0; i < 2; i++)
+		for (int j = i; j < 2; j++)
+		{
+			m[i][j] = 1;
+		}
 
 	TMatrix<int> m2(m);
 	//m2[0][0] = 1;
