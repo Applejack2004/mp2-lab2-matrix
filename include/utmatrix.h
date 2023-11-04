@@ -120,7 +120,7 @@ bool TVector<T>::operator==(const TVector& v) const
 	}
 	for (int i = 0; i < Size; i++)
 	{
-		if (v.pVector[i] != this->pVector[i])
+		if (v.pVector[i] != pVector[i])
 		{
 			return false;
 
@@ -139,20 +139,19 @@ bool TVector<T>::operator!=(const TVector& v) const
 template <class T> // присваивание
 TVector<T>& TVector<T>::operator=(const TVector& v)
 {
-	if (pVector != v.pVector)
+	if (v != *this)
 	{
-		if ((v.Size) != (Size))
-		{
+		
 			delete[] pVector;
 			pVector = new T[v.Size];
-			Size = v.Size;
-			StartIndex = v.StartIndex;
-		}
-		for (int i=0; i < Size; i++)
-		{
-			pVector[i] = v.pVector[i];
+		
+	}
+	Size = v.Size;
+	StartIndex = v.StartIndex;
+	for (int i = 0; i < Size; i++)
+	{
+		pVector[i] = v.pVector[i];
 
-		}
 	}
 	return *this;
 }
@@ -164,7 +163,7 @@ TVector<T> TVector<T>::operator+(const T& val)
 	TVector<T> res(Size);
 	for (int i = 0; i < Size; i++)
 	{
-		res.pVector[i] = val + this->pVector[i];
+		res.pVector[i] = val + pVector[i];
 	}
 	return res;
 }
@@ -176,7 +175,7 @@ TVector<T> TVector<T>::operator-(const T& val)
 	TVector<T> Res(Size);
 	for (int i = 0; i < Size; i++)
 	{
-		Res.pVector[i] = val - this->pVector[i];
+		Res.pVector[i] = val - pVector[i];
 	}
 	return Res;
 }
@@ -187,7 +186,7 @@ TVector<T> TVector<T>::operator*(const T& val)
 	TVector<T> Res(Size);
 	for (int i = 0; i < Size; i++)
 	{
-		Res.pVector[i] = val * this->pVector[i];
+		Res.pVector[i] = val * pVector[i];
 	}
 	return Res;
 }
@@ -202,7 +201,7 @@ TVector<T> TVector<T>::operator+(const TVector<T>& v)
 	TVector<T> Res(Size);
 	for (int i = 0; i < Size; i++)
 	{
-		Res.pVector[i] = v.pVector[i] + this->pVector[i];
+		Res.pVector[i] = v.pVector[i] + pVector[i];
 	}
 	return Res;
 }
@@ -217,7 +216,7 @@ TVector<T> TVector<T>::operator-(const TVector<T>& v)
 	TVector<T> res(Size);
 	for (int i = 0; i < Size; i++)
 	{
-		res.pVector[i] = v.pVector[i] - this->pVector[i];
+		res.pVector[i] = v.pVector[i] - pVector[i];
 	}
 	return res;
 }
@@ -251,6 +250,8 @@ public:
 	TMatrix& operator= (const TMatrix& mt);        // присваивание
 	TMatrix  operator+ (const TMatrix& mt);        // сложение
 	TMatrix  operator- (const TMatrix& mt);        // вычитание
+
+
 
 	// ввод / вывод
 	friend istream& operator>>(istream& in, TMatrix& mt)
