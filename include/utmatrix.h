@@ -175,7 +175,7 @@ TVector<T> TVector<T>::operator-(const T& val)
 	TVector<T> Res(Size);
 	for (int i = 0; i < Size; i++)
 	{
-		Res.pVector[i] = val - pVector[i];
+		Res.pVector[i]= pVector[i] - val;
 	}
 	return Res;
 }
